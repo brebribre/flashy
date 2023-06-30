@@ -1,0 +1,28 @@
+GET http://localhost:3000/decks
+
+###
+GET http://localhost:3000/cards
+
+###
+POST http://localhost:3000/deck/new 
+Content-Type: application/json 
+
+{
+    "name": "first deck",
+    "cards": []
+}
+
+###
+POST http://localhost:3000/card/new 
+Content-Type: application/json 
+
+{
+    "front": "front",
+    "back": "back"
+}
+
+###
+DELETE http://localhost:3000/card/delete/648855122f27593213e7fbe5
+
+###
+PUT http://localhost:3000/card/complete/64886f10dddce7fcb6aed260
