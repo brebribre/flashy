@@ -10,10 +10,6 @@ const CardSchema = new Schema({
         type: String,
         required: true
     },
-    deckId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Deck'
-    }
 })
 
 const Card = mongoose.model("Card", CardSchema);
