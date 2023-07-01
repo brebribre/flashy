@@ -4,6 +4,7 @@ GET http://localhost:3000/decks
 GET http://localhost:3000/cards
 
 ###
+//POST a new empty deck 
 POST http://localhost:3000/deck/new 
 Content-Type: application/json 
 
@@ -13,7 +14,19 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/card/new 
+//POST a new card 
+POST http://localhost:3000/card/new
+Content-Type: application/json 
+
+{
+    "front": "front",
+    "back": "back"
+    
+}
+
+###
+//POST a new card and ASSIGN to a deck
+POST http://localhost:3000/card/new/deck/649eca509874403ef532c030
 Content-Type: application/json 
 
 {
@@ -22,11 +35,19 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/deck/649eba1ac8ffabe4c9e0d694/card/649eba02c8ffabe4c9e0d692
+//PUT an existing card to a certain deck
+POST http://localhost:3000/deck/649ec7c440cf6c027c977a9c/card/649ec7c140cf6c027c977a99
 
 
 ###
-DELETE http://localhost:3000/card/delete/648855122f27593213e7fbe5
+DELETE http://localhost:3000/deck/delete/649ec7b740cf6c027c977a97
 
 ###
-PUT http://localhost:3000/card/complete/64886f10dddce7fcb6aed260
+DELETE http://localhost:3000/card/delete/649ebf9af69c97c6eff84d0f
+
+
+###
+//DELETE a card from a certain deck
+DELETE http://localhost:3000/deck/649ebf97f69c97c6eff84d0d/card/649ebf9af69c97c6eff84d0f
+
+

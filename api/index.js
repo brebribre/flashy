@@ -52,6 +52,26 @@ app.post('/card/new', (req,res)=>{
     res.json(card);
 });
 
+app.post('/card/new/deck/:id', async (req,res)=>{
+    // Find the deck by ID
+    const deck = await Deck.findById(req.params.id);
+    if (!deck) {
+      return res.status(404).json({ error: 'Deck not found' });
+    }
+
+    const card = new Card({
+        front: req.body.front,
+        back: req.body.back,
+        deckId: req.params.id
+    })
+    
+    deck.cards.push(card);
+    card.save();
+    deck.save();
+    res.json(card);
+
+});
+
 app.post('/deck/:deckId/card/:cardId', async (req, res) => {
 
     try {
@@ -88,14 +108,46 @@ app.post('/deck/:deckId/card/:cardId', async (req, res) => {
   });
 
 
-app.delete('/card/delete/:id', async(req, res) => {
-    const result = await Card.findByIdAndDelete(req.params.id);
-
-    res.json(result)
+app.delete('/deck/:deckId/card/:cardId', async(req, res) => {
+    try {
+        const { deckId, cardId } = req.params;
+    
+        // Find the deck by ID
+        const deck = await Deck.findById(deckId);
+    
+        if (!deck) {
+          return res.status(404).json({ error: 'Deck not found' });
+        }
+    
+        // Find the card by ID
+        const card = await Card.findById(cardId);
+    
+        if (!card) {
+          return res.status(404).json({ error: 'Card not found' });
+        }
+    
+        // Remove the card from the deck's cards array
+        deck.cards.pull(card);
+    
+        // Save the updated deck
+        await deck.save();
+    
+    
+        return res.status(200).json({ message: 'Card deleted from deck successfully' });
+      } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
 })
 
 app.delete('/deck/delete/:id', async(req, res) => {
     const result = await Deck.findByIdAndDelete(req.params.id);
+
+    res.json(result)
+})
+
+app.delete('/card/delete/:id', async(req, res) => {
+    const result = await Card.findByIdAndDelete(req.params.id);
 
     res.json(result)
 })
