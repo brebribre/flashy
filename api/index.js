@@ -209,7 +209,7 @@ app.delete('/card/delete/:id', async(req, res) => {
 
 // Serve the React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/public/index.html'));
+  res.sendFile(path.join(__dirname, '../client/src/App.js'));
 });
 
 app.listen(3001, () => {
